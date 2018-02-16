@@ -1,5 +1,6 @@
 const RcSwitch = require('node-rcswitch2')
 const Hapi = require('hapi')
+const HapiBoomDecorators = require('hapi-boom-decorators')
 
 const send = code => {
   return new Promise((resolve, reject) => {
@@ -46,7 +47,7 @@ server.route({
 
 const provision = async () => {
   try {
-    await server.register(Inert)
+    await server.register(HapiBoomDecorators)
     await server.start()
   }
   catch (err) {
