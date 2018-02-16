@@ -8,5 +8,8 @@
     "hapi": "^17.2.0",
     "hapi-boom-decorators": "^4.0.0",
     "node-rcswitch2": "file:./external/node-rcswitch2"
+  },
+  "scripts": {
+    "start": "node index.js"
   }
 }
