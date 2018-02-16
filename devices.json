@@ -1,0 +1,26 @@
+[
+	{
+		"name": "lampe-couch-rechts",
+		"codes": {
+			"on": 14559664,
+			"off": 13775760
+		},
+		"type": "switch-device"
+  },
+  {
+		"name": "lampe-couch-links",
+		"codes": {
+			"on": 14559668,
+			"off": 13775764
+		},
+		"type": "switch-device"
+  },
+  {
+		"name": "lampe-fernseher",
+		"codes": {
+			"on": 14559676,
+			"off": 13775772
+		},
+		"type": "switch-device"
+	}
+]
