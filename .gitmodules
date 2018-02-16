@@ -1,0 +1,3 @@
+[submodule "node-rcswitch2"]
+	path = external/node-rcswitch2
+	url = https://github.com/tdudek/node-rcswitch2.git

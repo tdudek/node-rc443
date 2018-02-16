@@ -1,0 +1,12 @@
+{
+  "name": "rc443",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Thomas Dudek <mail.dudek@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "hapi": "^17.2.0",
+    "hapi-boom-decorators": "^4.0.0",
+    "node-rcswitch2": "file:./external/node-rcswitch2"
+  }
+}

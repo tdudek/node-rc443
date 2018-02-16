@@ -1,0 +1,7 @@
+build/
+img/
+
+# IDEA project files
+/.idea/
+
+.bumpversion.cfg
