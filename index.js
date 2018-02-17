@@ -1,7 +1,10 @@
 const RcSwitch = require('node-rcswitch2')
+const Path = require('path')
 const Hapi = require('hapi')
 const HapiBoomDecorators = require('hapi-boom-decorators')
-const deviceList = require('./devices.json')
+const Inert = require('inert')
+
+const deviceList = require(Path.join(__dirname, 'devices.json'))
 
 const send = code => {
   return new Promise((resolve, reject) => {
@@ -88,7 +91,21 @@ const devices = new Devices(deviceList)
 const server = new Hapi.Server({
   port: 3000,
   host: '0.0.0.0',
+  routes: {
+    files: {
+      relativeTo: Path.join(__dirname, 'public')
+    }
+  },
 })
+
+server.route({
+  method: 'GET',
+  path: '/',
+  handler: (request, h) => {
+    return h.file('index.html')
+  }
+})
+
 
 server.route({
   method: 'GET',
@@ -171,6 +188,7 @@ server.route({
 const provision = async () => {
   try {
     await server.register(HapiBoomDecorators)
+    await server.register(Inert)
     await server.start()
   }
   catch (err) {

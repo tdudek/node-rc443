@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Samsung TV Remote</title>
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <style>
+    .page-content-center {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .device {
+      width: 70%;
+      margin-bottom: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+    }
+
+    @media (max-width: 1000px) {
+      .device {
+        width: 90%;
+      }
+    }
+
+    .device-name {
+      display: flex;
+      margin-top: 0px;
+      flex-basis: calc(100% - 22px);
+      justify-content: center;
+      flex-direction: column;
+      text-transform: uppercase;
+      font-family: system-ui;
+      background-color: DodgerBlue;
+      border: none;
+      color: white;
+      padding: 12px 16px;
+      margin-bottom: 4px;
+      font-size: 1.5em;
+    }
+
+    .device-btn {
+      display: flex;
+      flex-basis: calc(50%);
+      justify-content: center;
+      flex-direction: column;
+      background-color: DodgerBlue;
+      border: none;
+      color: white;
+      padding: 12px 16px;
+      font-size: 1.5em;
+      cursor: pointer;
+    }
+
+    .device-btn:hover {
+      background-color: RoyalBlue;
+    }
+
+    .device-btn__off {
+      background-color: rgb(131, 193, 255);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app" class="page-content-center">
+
+
+  </div>
+
+  <script type="text/x-template" data-template-name="device">
+    <div class="device" data-device>
+        <span class="device-name" data-device-name></span>
+  
+        <button class="device-btn" data-device-on>
+          On
+          <i class="fas fa-lightbulb"></i>
+        </button>
+  
+        <button class="device-btn device-btn__off" data-device-off>
+          Off
+          <i class="far fa-lightbulb"></i>
+        </button>
+      </div>
+  </script>
+
+  <script>
+
+    const patchCommand = (device, command) => {
+      fetch(`/api/devices/${device.name}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          command,
+        })
+      })
+        .then(response => console.log(response.body))
+    }
+
+    const addDevice = device => {
+      const template = document.querySelector('[data-template-name="device"]')
+      const deviceElement = document.createElement('div')
+      document.getElementById('app').appendChild(deviceElement)
+
+      deviceElement.innerHTML = template.innerHTML
+      deviceElement.querySelector('[data-device-name]').innerHTML = device.name.replace(/-/g, ' ')
+
+      const onButton = deviceElement.querySelector('[data-device-on]')
+      onButton.addEventListener('click', event => {
+        patchCommand(device, 'on')
+      })
+
+      const offButton = deviceElement.querySelector('[data-device-off]')
+      offButton.addEventListener('click', event => {
+        patchCommand(device, 'off')
+      })
+
+
+    }
+
+    fetch('/api/devices', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(response => response.json())
+      .then(devices => {
+        devices.forEach(device => addDevice(device))
+      })
+  </script>
+</body>
+
+</html>
